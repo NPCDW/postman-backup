@@ -1,0 +1,11 @@
+services:
+  postman-backup:
+    image: npcdw/postman-backup
+    container_name: postman-backup
+    volumes:
+      - "${PWD}/data/:/app/"
+    environment:
+      TZ: 'Asia/Shanghai'
+      LANG: 'C.UTF-8'
+      LC_ALL: 'C.UTF-8'
+      POSTMAN_API_KEY: 'your api_key'

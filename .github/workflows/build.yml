@@ -82,5 +82,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            npcdw/postman-backup:latest
             npcdw/postman-backup:${{ github.ref_name }}
+            npcdw/postman-backup:latest

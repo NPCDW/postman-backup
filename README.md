@@ -30,6 +30,16 @@ backup
 ```
 ## 使用
 
-1. 首先需要到 `postman` 控制台生成一个 `api_key`，[点击这里去生成](https://go.postman.co/settings/me/api-keys)
-2. 设置环境变量 `POSTMAN_API_KEY` 为第一步得到的 `api_key`
-3. 运行程序
+### Windows & Macos
+
+1. 下载 [`Release`](https://github.com/NPCDW/postman-backup/releases)
+2. 去 `postman` 控制台生成一个 `api_key`，[点击这里去生成](https://go.postman.co/settings/me/api-keys)
+3. 设置环境变量 `POSTMAN_API_KEY` 为第一步得到的 `api_key`
+4. 运行程序
+
+### Docker
+
+建议复制该 [`docker-compose.yml`](docker-compose.yml) 文件到服务器，并在同目录下运行
+```bash
+docker compose up
+```
