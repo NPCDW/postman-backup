@@ -42,10 +42,11 @@ jobs:
         override: true
         target: ${{ matrix.target }}
     - name: Install dependencies
-      run: |
-        if [ "${{ matrix.build }}" = "linux" ]; then
-          apt-get install -y openssl ca-certificates
-        fi
+      if: matrix.build == 'linux'
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: openssl ca-certificates
+        version: 1.0
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
