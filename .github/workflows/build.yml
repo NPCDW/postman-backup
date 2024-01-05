@@ -2,21 +2,17 @@ name: Rust
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags: "*"
 
 env:
   CARGO_TERM_COLOR: always
-  OPENSSL_DIR: /usr/
-  OPENSSL_LIB_DIR: /usr/lib/x86_64-linux-gnu/
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        build: [linux, macos, windows]
+        build: [macos, windows]
         include:
           - build: macos
             os: macos-latest
@@ -57,11 +53,10 @@ jobs:
           cp "../target/${{ matrix.target }}/release/postman-backup" ./
           tar -czf "${{ matrix.archive-name }}" LICENSE README.md postman-backup
         fi
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.0.0
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: ${{ matrix.archive-name }}
-        path: archive/${{ matrix.archive-name }}
+        files: archive/${{ matrix.archive-name }}
 
   docker:
     runs-on: ubuntu-latest
@@ -84,4 +79,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            npcdw/postman-backup:latest
+            ${{ github.repository }}:latest
+            ${{ github.repository }}:${{ github.ref_name }}
