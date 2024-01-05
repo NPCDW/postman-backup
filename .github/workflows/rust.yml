@@ -45,7 +45,7 @@ jobs:
       if: matrix.build == 'linux'
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: openssl ca-certificates
+        packages: libssl-dev ca-certificates
         version: 1.0
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
