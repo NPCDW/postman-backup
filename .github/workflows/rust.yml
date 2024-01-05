@@ -31,10 +31,9 @@ jobs:
             rust: stable-x86_64-msvc
             target: x86_64-pc-windows-msvc
             archive-name: postman-backup-windows.7z
-      fail-fast: false
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install Rust
       uses: actions-rs/toolchain@v1
       with:
@@ -42,6 +41,11 @@ jobs:
         profile: minimal
         override: true
         target: ${{ matrix.target }}
+    - name: Install dependencies
+      run: |
+        if [ "${{ matrix.build }}" = "linux" ]; then
+          apt-get install -y openssl ca-certificates
+        fi
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
