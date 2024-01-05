@@ -43,10 +43,7 @@ jobs:
         target: ${{ matrix.target }}
     - name: Install dependencies
       if: matrix.build == 'linux'
-      uses: awalsh128/cache-apt-pkgs-action@latest
-      with:
-        packages: libssl-dev ca-certificates
-        version: 1.0
+      run: sudo apt-get install -y openssl ca-certificates
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
