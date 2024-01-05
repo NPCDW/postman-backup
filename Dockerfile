@@ -1,12 +1,8 @@
 FROM rust:latest AS rust-build
 
-WORKDIR /usr/src
-
-RUN USER=root cargo new postman-backup
+RUN mkdir /usr/src/postman-backup
 WORKDIR /usr/src/postman-backup
 COPY ./Cargo.toml ./Cargo.lock ./
-RUN cargo build --release
-RUN rm -rf src
 COPY ./src ./src
 RUN cargo build --release
 
