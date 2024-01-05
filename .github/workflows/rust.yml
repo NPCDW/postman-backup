@@ -43,11 +43,6 @@ jobs:
         profile: minimal
         override: true
         target: ${{ matrix.target }}
-    - name: Install dependencies
-      if: matrix.build == 'linux'
-      run: |
-        sudo apt install pkg-config
-        sudo apt-get install -y libudev-dev openssl libssl-dev
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
