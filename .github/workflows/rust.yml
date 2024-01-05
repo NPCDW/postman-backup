@@ -18,17 +18,17 @@ jobs:
         include:
           - build: linux
             os: ubuntu-latest
-            rust: latest
+            rust: stable
             target: x86_64-unknown-linux-musl
             archive-name: postman-backup-linux.tar.gz
           - build: macos
             os: macos-latest
-            rust: latest
+            rust: stable
             target: x86_64-apple-darwin
             archive-name: postman-backup-macos.tar.gz
           - build: windows
             os: windows-latest
-            rust: latest-x86_64-msvc
+            rust: stable-x86_64-msvc
             target: x86_64-pc-windows-msvc
             archive-name: postman-backup-windows.7z
       fail-fast: false
