@@ -36,7 +36,8 @@ async fn main() -> anyhow::Result<()> {
     for workspace in workspaces_body["workspaces"].as_array().unwrap() {
         log::info!("备份工作区 {}", workspace["name"].as_str().unwrap());
         let workspace_id = workspace["id"].as_str().unwrap();
-        write_file(PathBuf::new().join(format!("backup/workspace/{workspace_id}/workspace_info.json")).as_path(), workspace.to_string())?;
+        let workspace_body: Value = get_client(&api_key).get(format!("{POSTMAN_BASE_URL}/workspaces/{workspace_id}")).send().await?.json().await?;
+        write_file(PathBuf::new().join(format!("backup/workspace/{workspace_id}/workspace_info.json")).as_path(), workspace_body["workspace"].to_string())?;
         
         let mut archive: Value = json!({"environment": {}, "collection": {}});
 
@@ -58,6 +59,15 @@ async fn main() -> anyhow::Result<()> {
             archive["environment"][environment_id] = Value::Bool(true);
             let environment_body: Value = get_client(&api_key).get(format!("{POSTMAN_BASE_URL}/environments/{environment_id}")).send().await?.json().await?;
             write_file(PathBuf::new().join(format!("backup/workspace/{workspace_id}/environment/{}.json", environment_id)).as_path(), environment_body["environment"].to_string())?;
+        }
+        {
+            log::info!("备份 {} 工作区内 globals 环境...", workspace["name"].as_str().unwrap());
+            let environment_body: Value = get_client(&api_key).get(format!("{POSTMAN_BASE_URL}/workspaces/{workspace_id}/global-variables")).send().await?.json().await?;
+            let values = environment_body["values"].as_array().unwrap();
+            if !values.is_empty() {
+                let globals_environment_body: Value = json!({"values": values, "name": "Globals", "_postman_variable_scope": "globals"});
+                write_file(PathBuf::new().join(format!("backup/workspace/{workspace_id}/environment/globals.json")).as_path(), globals_environment_body.to_string())?;
+            }
         }
 
         write_file(PathBuf::new().join(format!("backup/workspace/{workspace_id}/archive.json")).as_path(), archive.to_string())?;
