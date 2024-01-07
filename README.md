@@ -13,6 +13,7 @@ backup
             ├── collection_id222222.json
             └── collection_id333333.json
         └── environment
+            ├── globals.json
             ├── environment_id111111.json
             ├── environment_id222222.json
             └── environment_id333333.json
@@ -24,6 +25,7 @@ backup
             ├── collection_id222222.json
             └── collection_id333333.json
         └── environment
+            ├── globals.json
             ├── environment_id111111.json
             ├── environment_id222222.json
             └── environment_id333333.json
