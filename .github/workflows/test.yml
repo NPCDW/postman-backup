@@ -31,7 +31,7 @@ jobs:
         toolchain: ${{ matrix.rust }}
         target: ${{ matrix.target }}
     - name: Install Dependencies
-      run: apt install openssl1.0 libssl1.0.0 libssl1.0-dev
+      run: sudo apt install openssl1.0 libssl1.0.0 libssl1.0-dev
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
