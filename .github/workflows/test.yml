@@ -5,6 +5,8 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  OPENSSL_LIB_DIR: /usr/lib/x86_64-linux-gnu
+  OPENSSL_INCLUDE_DIR: /usr/include/openssl 
 
 permissions:
   contents: write
@@ -28,6 +30,8 @@ jobs:
       with:
         toolchain: ${{ matrix.rust }}
         target: ${{ matrix.target }}
+    - name: Install Dependencies
+      run: apt install openssl1.0 libssl1.0.0 libssl1.0-dev
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
