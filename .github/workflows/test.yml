@@ -28,8 +28,6 @@ jobs:
       with:
         toolchain: ${{ matrix.rust }}
         target: ${{ matrix.target }}
-    - name: Install Dependencies
-      run: sudo apt install -y openssl libssl-dev
     - name: Build
       run: cargo build --verbose --release --target ${{ matrix.target }}
       env:
